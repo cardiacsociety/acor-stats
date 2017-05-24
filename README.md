@@ -20,7 +20,7 @@ For a device registry item can designate proceType as "device"
 
 ```json
 {
-   "patiendId": "2161c1290",
+   "patientId": "2161c1290",
    "siteId": "2161",
    "siteState": "NSW",
    "procDate": "2016-10-01",
@@ -34,7 +34,7 @@ For a procedures registry item, eg PCI
 
 ```json
 {
-   "patiendId": "2161c1290",
+   "patientId": "2161c1290",
    "siteId": "2161",
    "siteState": "NSW",
    "procDate": "2016-10-01",
