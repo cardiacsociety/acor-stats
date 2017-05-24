@@ -26,19 +26,21 @@ For a device registry item can designate proceType as "device"
    "procDate": "2016-10-01",
    "procType": "device",
    "deviceType": "ICD",
-   "deviceSubType": "Dual",
+   "deviceSubType": "Dual"
 }
 ```
 
 For a procedures registry item, eg PCI
 
 ```json
+{
    "patiendId": "2161c1290",
    "siteId": "2161",
    "siteState": "NSW",
    "procDate": "2016-10-01",
    "procType": "pci",
    "deviceType": "stent",
-   "deviceSubType": "DES",
+   "deviceSubType": "DES"
+}
 ```
 
