@@ -15,7 +15,7 @@ func Aggregate(ap []bson.M) ([]bson.M, error) {
 	mc := os.Getenv("MONGO_COL")
 	col := mongo.DB(md).C(mc)
 
-	fmt.Println("Have pipeline doc:", ap)
+	//fmt.Println("Have pipeline doc:", ap)
 	pipe := col.Pipe(ap)
 
 	r := []bson.M{}

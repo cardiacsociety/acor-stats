@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -17,8 +16,7 @@ type ReportFilter struct {
 // TimeReport does reports by month-year. It takes a report filter to modify the aggregation query
 func TimeReport(rf ReportFilter) []bson.M {
 
-	fmt.Println("\nTimeReport() --------------------------------")
-
+	//fmt.Println("\nTimeReport() --------------------------------")
 	match := bson.M{}
 	if rf.State != "" {
 		match["siteState"] = rf.State

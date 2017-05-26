@@ -67,7 +67,10 @@
 <script>
     $(document).ready(function() {
 
-        var apiBase = "http://localhost:8080/api/report"
+        //var apiBase = "http://localhost:8080/api/report"
+        var apiBase = "{{ .APIBaseURL }}" + "/report";
+        apiBase = apiBase.replace(/\\\//g, "/");
+        //console.log(apiBase);
 
         /* raw query passed from the web page to the api */
         report({

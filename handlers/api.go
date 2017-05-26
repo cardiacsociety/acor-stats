@@ -10,7 +10,15 @@ import (
 	"fmt"
 	"github.com/cardiacsociety/acor-stats/db"
 	"gopkg.in/mgo.v2/bson"
+	"github.com/34South/envr"
 )
+
+func init() {
+	// Set up env
+	envr.New("acor-api", []string{
+		"API_BASE_URL",
+	}).Auto()
+}
 
 type Chart struct {
 	Title  string   `json:"title"`
@@ -23,8 +31,8 @@ func TimeReportHandler(w http.ResponseWriter, r *http.Request) {
 	// get state param
 	//report := r.URL.Query().Get("report")
 
-	fmt.Println(r.URL.String())
-	fmt.Println(r.URL.RawQuery)
+	//fmt.Println(r.URL.String())
+	//fmt.Println(r.URL.RawQuery)
 
 	// filter object
 	rf := db.ReportFilter{
@@ -64,9 +72,9 @@ func chartJSON(title string, xbm []bson.M) ([]byte, error) {
 	//months := []string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"}
 
 	// ... and array of labels and values, in order
-	for i, v := range xbm {
+	for _, v := range xbm {
 		point := v["_id"].(bson.M)
-		fmt.Println(i, point["month"], "-", point["year"])
+		//fmt.Println(i, point["month"], "-", point["year"])
 		//monthNumber := point["month"].(int)
 		rj.Labels = append(rj.Labels, fmt.Sprintf("%v-%v", point["month"], point["year"]))
 		rj.Data = append(rj.Data, v["count"].(int))

@@ -16,9 +16,7 @@ const ReportJSON = "report.json"
 func main() {
 
 	db.Connect()
-	//db.Import()
-
-	//aggReport("device-NSW")
+	db.Import()
 
 	// Kick off the web server and api
 	m := http.NewServeMux()

@@ -3,6 +3,8 @@ package handlers
 import (
 	"html/template"
 	"net/http"
+	"os"
+	"fmt"
 )
 
 var tpl *template.Template
@@ -14,7 +16,14 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	tpl.ExecuteTemplate(w, "index", nil)
+	// Need to pass a few things to the template
+	var data struct {
+		APIBaseURL string
+	}
+	data.APIBaseURL = os.Getenv("API_BASE_URL")
+	fmt.Println(data.APIBaseURL)
+
+	tpl.ExecuteTemplate(w, "index", data)
 }
 
 func Test(w http.ResponseWriter, r *http.Request) {

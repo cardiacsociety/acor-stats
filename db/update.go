@@ -127,12 +127,12 @@ func updateCollection(d []Data) {
 	//col.Find(bson.M{}).One(&s)
 	//fmt.Println(s)
 
-	for i, v := range d {
-		fmt.Println("Upsert", i, v)
+	for _, v := range d {
+		//fmt.Println("Upsert", i, v)
 
 		// Use patientId, siteId and procDate as selector for upsert
 		s := bson.M{"patientId": v.PatientID, "siteId": v.SiteID, "procDate": v.ProcDate}
-		fmt.Println(s)
+		//fmt.Println(s)
 
 		_, err := col.Upsert(s, v)
 		if err != nil {
