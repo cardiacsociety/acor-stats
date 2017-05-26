@@ -1,0 +1,290 @@
+{{ define "index" }}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Chart Test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+</head>
+<body>
+<div class="container">
+
+    <h1>ACOR Reports</h1>
+
+    <hr>
+
+    <ul>
+        <li><a href="#d0">Device All</a></li>
+        <li><a href="#d1">Device By State</a></li>
+        <li><a href="#d2">Device By Type</a></li>
+
+        <li><a href="#p0">Procedures All</a></li>
+        <li><a href="#p1">Procedures By Stent Type</a></li>
+    </ul>
+
+    <hr>
+
+    <h1>Devices Reports</h1>
+
+    <h4 id="d0">Devices All</h4>
+    <canvas id="dc0"></canvas>
+
+    <h4 id="d1">Devices By State</h4>
+    <h5>NSW</h5><canvas id="dc1-0"></canvas>
+    <h5>QLD</h5><canvas id="dc1-1"></canvas>
+    <h5>SA</h5><canvas id="dc1-2"></canvas>
+
+    <h4 id="d2">Device by Type</h4>
+    <h5>ICD</h5><canvas id="dc2-0"></canvas>
+    <h5>Pacemaker</h5><canvas id="dc2-1"></canvas>
+    <h5>Other</h5><canvas id="dc2-2"></canvas>
+
+    <hr>
+
+    <h1>Procedures Reports</h1>
+
+    <h5 id="p0">Procedures All</h5>
+    <canvas id="pc0"></canvas>
+
+
+    <h5 id="p1">Procedures By Stent Type</h5>
+    <h5>BMS</h5><canvas id="pc1-0"></canvas>
+    <h5>DES</h5><canvas id="pc1-1"></canvas>
+    <h5>Multiple</h5><canvas id="pc1-2"></canvas>
+    <h5>None</h5><canvas id="pc1-3"></canvas>
+    <h5>Other</h5><canvas id="pc1-4"></canvas>
+
+
+    <h5 id="p2">Procedures By State</h5>
+    <h5>NSW</h5><canvas id="pc2-0"></canvas>
+    <h5>QLD</h5><canvas id="pc2-1"></canvas>
+    <h5>SA</h5><canvas id="pc2-2"></canvas>
+
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+<script>
+    $(document).ready(function() {
+
+        var apiBase = "http://localhost:8080/api/report"
+
+        /* raw query passed from the web page to the api */
+        report({
+            api: apiBase + '/time?p=device',
+            target: 'dc0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=NSW&p=device',
+            target: 'dc1-0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=QLD&p=device',
+            target: 'dc1-1',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=SA&p=device',
+            target: 'dc1-2',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?&d=Pacemaker',
+            target: 'dc2-0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?d=ICD',
+            target: 'dc2-1',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?d=Unknown',
+            target: 'dc2-2',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?p=pci',
+            target: 'pc0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?ds=BMS',
+            target: 'pc1-0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?ds=DES',
+            target: 'pc1-1',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?ds=Multiple',
+            target: 'pc1-2',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?ds=None',
+            target: 'pc1-3',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?ds=Unknown',
+            target: 'pc1-4',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=NSW&p=pci',
+            target: 'pc2-0',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=QLD&p=pci',
+            target: 'pc2-1',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+        report({
+            api: apiBase + '/time?s=SA&p=pci',
+            target: 'pc2-2',
+            // title: 'chart title',
+            dataLabel: 'count'
+        }, "bar");
+
+    });
+
+    function report(r, type) {
+
+        $.getJSON(r.api, function(res) {
+            r.labels = res.labels; // Object.keys(res.data);
+            r.values = res.data; // Object.values(res.data);
+            r.count = r.values.length;
+            r.title = res.title;
+            //console.log(r);
+            doChart(r, type);
+        });
+    }
+
+    function doChart(r, chartType) {
+
+        // Set colours according to goodness!
+        var bgColours = [];
+        var borderColours = [];
+
+        var bgOpacity = 0.4;
+        var borderOpacity = 1;
+
+        // Percentile colours
+        var clrs = [];
+        // Black < 10%
+        clrs.push('0, 0, 0');
+        // Grey < 20%
+        clrs.push('102, 102, 102');
+        // purple < 30%
+        clrs.push('129, 0, 127');
+        // dk blue < 40%
+        clrs.push('0, 51, 102');
+        // lt blue < 50%
+        clrs.push('173, 216, 230');
+        // lt green < 60%
+        clrs.push('144, 238, 144');
+        // dk green < 70%
+        clrs.push('1, 50, 32');
+        // yellow < 80%
+        clrs.push('254, 254, 0');
+        // orange < 90%
+        clrs.push('255, 165, 0');
+        // red < 100%
+        clrs.push('238, 0, 0');
+
+        var min = 0;
+        var max = Math.max(...r.values);
+        var percentileIncrement = max / 10;
+        //console.log('Percentile Increment is ' + percentileIncrement);
+
+        for (var i = 0; i < r.count; i++) {
+            // in which percentile does the current value live?
+            var msg = "value " + r.values[i] + ", max value " + max;
+            var percentile = Math.ceil(r.values[i] / percentileIncrement);
+            if (percentile < 1) {
+                percentile = 1;
+            }
+            msg += " =  percentile value of " + percentile;
+            --percentile; // array key
+            msg += " which is clr array key = " + percentile + " with value " + clrs[percentile];
+
+            bgColours[i] = 'rgba(' + clrs[percentile] + ', ' + bgOpacity + ')';
+            borderColours[i] = 'rgba(' + clrs[percentile] + ', ' + bgOpacity + ')';
+
+            //console.log(msg);
+        }
+
+        var ctx = document.getElementById(r.target);
+        new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: r.labels,
+                datasets: [{
+                    label: r.dataLabel,
+                    data: r.values,
+                    backgroundColor: bgColours,
+                    borderColor: borderColours,
+                    borderWidth: 1
+                }
+                ]
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: r.title
+                },
+                legend: {
+                    display: false
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+</script>
+
+
+</body>
+</html>
+{{ end }}
