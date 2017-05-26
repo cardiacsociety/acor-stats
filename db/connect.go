@@ -15,7 +15,7 @@ func init() {
 	envr.New("acor-db", []string{
 		"DEVICES_CSV_FILE",
 		"PROCEDURES_CSV_FILE",
-		"MONGO_URL",
+		"MONGODB_URI",
 		"MONGO_DB",
 		"MONGO_COL",
 		"MONGO_SRC",
