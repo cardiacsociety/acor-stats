@@ -6,12 +6,11 @@ import (
 	"io"
 	"net/http"
 
+	"encoding/json"
 	"fmt"
 	"github.com/cardiacsociety/acor-stats/db"
 	"gopkg.in/mgo.v2/bson"
-	"encoding/json"
 )
-
 
 type Chart struct {
 	Title  string   `json:"title"`

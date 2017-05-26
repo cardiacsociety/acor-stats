@@ -12,4 +12,3 @@ type Data struct {
 	DeviceType    string    `json:"deviceType" bson:"deviceType"`
 	DeviceSubType string    `json:"deviceSubType" bson:"deviceSubType"`
 }
-
