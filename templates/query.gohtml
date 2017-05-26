@@ -1,32 +1,35 @@
-{{ define "test" }}
+{{ define "query" }}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Test</title>
+    <title>ACOR Query Report</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
 </head>
 <body>
+<div class="container">
 
-<h1>TEST</h1>
+    <h1>Query Report</h1>
 
-<div style="width: 40vw; height: 20vw;">
-    <canvas id="chart1"></canvas>
+    <div style="width: 40vw; height: 20vw;">
+        <canvas id="chart"></canvas>
+    </div>
+
 </div>
-
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.bundle.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
-
-
 <script>
     $(document).ready(function() {
 
-        var apiBase = "http://localhost:8080/api/report"
+        //var apiBase = "http://localhost:8080/api/report"
+        var api = "{{ .APIBaseURL }}" + "/report/time?" + "{{ .Query }}";
+        api = api.replace(/\\\//g, "/");
+        //console.log(apiBase);
 
         /* raw query passed from the web page to the api */
         report({
-            api: apiBase + 'report/time?{{ . }}',
-            target: 'c1',
+            api: api,
+            target: 'chart',
             // title: 'chart title',
             dataLabel: 'count'
         }, "bar");
@@ -132,8 +135,6 @@
         });
     }
 </script>
-
-
 </body>
 </html>
 {{ end }}

@@ -32,7 +32,7 @@ func main() {
 
 	// Pages / Reports
 	m.HandleFunc("/", handlers.Index)
-	m.HandleFunc("/test", handlers.Test)
+	m.HandleFunc("/query", handlers.RawQuery)
 	m.HandleFunc("/reports/all", handlers.ReportsAllHandler)
 	m.HandleFunc("/reports/all/state", handlers.ReportsAllStateHandler)
 	m.HandleFunc("/reports/devices", handlers.ReportsDevicesHandler)

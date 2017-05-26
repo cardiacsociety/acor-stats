@@ -16,21 +16,26 @@ func init() {
 
 func Index(w http.ResponseWriter, r *http.Request) {
 
-	// Need to pass a few things to the template
 	var data struct {
 		APIBaseURL string
 	}
 	data.APIBaseURL = os.Getenv("API_BASE_URL")
-	fmt.Println(data.APIBaseURL)
 
 	tpl.ExecuteTemplate(w, "index", data)
 }
 
-func Test(w http.ResponseWriter, r *http.Request) {
+func RawQuery(w http.ResponseWriter, r *http.Request) {
 
-	// pass the raw query to the template so it can be appended to the api url
-	q := r.URL.RawQuery
-	tpl.ExecuteTemplate(w, "test", q)
+	var data struct {
+		APIBaseURL string
+		Query string
+	}
+	data.APIBaseURL = os.Getenv("API_BASE_URL")
+	data.Query = r.URL.RawQuery
+
+	fmt.Println(data)
+
+	tpl.ExecuteTemplate(w, "query", data)
 }
 
 func ReportsAllHandler(w http.ResponseWriter, r *http.Request) {
