@@ -25,7 +25,7 @@ func init() {
 func Connect() {
 
 	var err error
-	mongo, err = mgo.Dial(os.Getenv("MONGO_URL"))
+	mongo, err = mgo.Dial(os.Getenv("MONGODB_URI"))
 	if err != nil {
 		fmt.Println("Could not connect to mongo", err)
 	} else {

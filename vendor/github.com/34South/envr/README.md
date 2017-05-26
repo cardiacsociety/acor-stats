@@ -9,7 +9,7 @@ Like this:
 
 ```go
 env := envr.New("myEnv", []string{
-  "MONGO_URL",
+  "MONGODB_URI",
   "MONGO_DB",
   "MONGO_LINKS_COLLECTION",
   "MONGO_STATS_COLLECTION",
