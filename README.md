@@ -7,16 +7,16 @@ Generate statistical reports for ACOR that show devices and procedures over time
 
 **Method**
 
-* Import data from spreadsheets / CSV into doc database
+* Import data from spreadsheets / CSV into MongoDB collection
 * Provide simple API to extract data for reports
 * HTML report page using js charting library
 
 **Doc Design**
 
-There are two registries - devices and procedures, however the data is similar for both so it might be possible and practical to model them in a similar way in order to generate statistics across both registries.
+There are official registries - devices and procedures, however the devices registry is a subset of procedures so the data can be imported into a single collection and reports generated across both registries.
 
 
-For a device registry item can designate proceType as "device"
+For a device registry item procType = "device"
 
 ```json
 {
@@ -30,7 +30,7 @@ For a device registry item can designate proceType as "device"
 }
 ```
 
-For a procedures registry item, eg PCI
+For a procedures registry item procType = "pci"
 
 ```json
 {
@@ -43,4 +43,3 @@ For a procedures registry item, eg PCI
    "deviceSubType": "DES"
 }
 ```
-
