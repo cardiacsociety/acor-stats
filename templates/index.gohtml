@@ -10,8 +10,32 @@
 
     <h1>ACOR Reports</h1>
 
+    <h3>API / JSON Chart Data</h3>
+
+    <p>JSON data for time-based reports can be generated thus:</p>
+    <p><b>/api/report/time?s=[STATE]&p=[TYPE]&d=[DEVICE]&ds=[DEVICETYPE]</p>
+    <p>where:
+      <ul>
+        <li><b>s=</b> state values of "NSW", "QLD", "SA"</li>
+        <li><b>p=</b> procedure values "device", "pci"</li>
+        <li><b>d=</b> device values "Pacemaker", "ICD", "stent" (redundant as all pcs have this value)</li>
+        <li><b>ds=</b> device sub type values "Single", "Dual", "BMS", "DES", "Multiple", "None", "Unknown"</li>
+      </ul>
+
+    <p>Example: <a href="/api/report/time?s=NSW&ds=Multiple"target="_blank">/api/report/time?s=NSW&ds=Multiple</a></p>
+
+
+    <h3>Chart from Data</h3>
+
+    <p>To generate a chart from the JSON data pass the same url query params to '/query':</p>
+
+    <p><b>/query?s=[STATE]&p=[TYPE]&d=[DEVICE]&ds=[DEVICETYPE]</p>
+
+    <p>Example: <a href="/query?s=NSW&ds=Multiple"target="_blank">/api/report/time?s=NSW&ds=Multiple</a></p>
+
     <hr>
 
+    <h3>Samples</h3>
     <ul>
         <li><a href="#d0">Device All</a></li>
         <li><a href="#d1">Device By State</a></li>
