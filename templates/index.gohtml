@@ -13,7 +13,7 @@
     <h3>API / JSON Chart Data</h3>
 
     <p>JSON data for time-based reports can be generated thus:</p>
-    <p><b>/api/report/time?s=[STATE]&p=[TYPE]&d=[DEVICE]&ds=[DEVICETYPE]</p>
+    <p><b>/api/report/time?s=[STATE]&p=[PROCEDURE]&d=[DEVICE]&ds=[DEVICE-SUBTYPE]</b></p>
     <p>where:
       <ul>
         <li><b>s=</b> state values of "NSW", "QLD", "SA"</li>
@@ -29,7 +29,7 @@
 
     <p>To generate a chart from the JSON data pass the same url query params to '/query':</p>
 
-    <p><b>/query?s=[STATE]&p=[TYPE]&d=[DEVICE]&ds=[DEVICETYPE]</p>
+    <p><b>/query?s=[STATE]&p=[PROCEDURE]&d=[DEVICE]&ds=[DEVICE-SUBTYPE]</b></p>
 
     <p>Example: <a href="/query?s=NSW&ds=Multiple"target="_blank">/api/report/time?s=NSW&ds=Multiple</a></p>
 
