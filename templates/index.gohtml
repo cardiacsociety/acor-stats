@@ -216,10 +216,14 @@
         $.getJSON(r.api, function(res) {
             r.labels = res.labels; // Object.keys(res.data);
             r.values = res.data; // Object.values(res.data);
-            r.count = r.values.length;
             r.title = res.title;
+
+            if (r.values !== null) {
+                r.count = r.values.length;
+                doChart(r, type);
+            }
+
             //console.log(r);
-            doChart(r, type);
         });
     }
 

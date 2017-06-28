@@ -42,24 +42,20 @@ func importDevicesCSV(rd *[]Data, csv string) {
 		xs := strings.Split(s.Text(), ",")
 		d := Data{}
 		d.UpdatedAt = time.Now()
-		d.PatientID = xs[0]
-		d.SiteID = xs[1]
-		d.SiteState = xs[2]
-		t, err := time.Parse("2/01/2006", xs[3])
+		d.SiteState = xs[0]
+		t, err := time.Parse("2/01/2006", xs[1])
 		if err != nil {
 			fmt.Println("time.Parse() err,", err)
 		}
 		d.ProcDate = t
 		d.ProcType = "device"
-		if xs[5] == "" {
+		d.DeviceType = xs[3]
+		if d.DeviceType == "" {
 			d.DeviceType = "Unknown"
-		} else {
-			d.DeviceType = xs[5]
 		}
-		if xs[7] == "" {
+		d.DeviceSubType = xs[5]
+		if d.DeviceSubType == "" {
 			d.DeviceSubType = "Unknown"
-		} else {
-			d.DeviceSubType = xs[7]
 		}
 
 		*rd = append(*rd, d)
@@ -80,20 +76,17 @@ func importProceduresCSV(rd *[]Data, csv string) {
 		xs := strings.Split(s.Text(), ",")
 		d := Data{}
 		d.UpdatedAt = time.Now()
-		d.PatientID = xs[0]
-		d.SiteID = xs[1]
-		d.SiteState = xs[2]
-		t, err := time.Parse("2/01/2006", xs[3])
+		d.SiteState = xs[0]
+		t, err := time.Parse("2/01/2006", xs[1])
 		if err != nil {
 			fmt.Println("time.Parse() err,", err)
 		}
 		d.ProcDate = t
 		d.ProcType = "pci"
 		d.DeviceType = "stent"
-		if xs[6] == "" {
-			d.DeviceSubType = "Unknown"
-		} else {
-			d.DeviceSubType = xs[6]
+		d.DeviceSubType = xs[3]
+		if d.DeviceSubType == "" {
+			d.DeviceSubType = "None"
 		}
 
 		*rd = append(*rd, d)
@@ -127,16 +120,26 @@ func updateCollection(d []Data) {
 	//col.Find(bson.M{}).One(&s)
 	//fmt.Println(s)
 
+	// Straight insert means we need to empty out first
+	_, err := col.RemoveAll(bson.M{})
+	if err != nil {
+		log.Fatalln("Could not empty collection")
+
+	}
+
 	for _, v := range d {
 		//fmt.Println("Upsert", i, v)
 
 		// Use patientId, siteId and procDate as selector for upsert
-		s := bson.M{"patientId": v.PatientID, "siteId": v.SiteID, "procDate": v.ProcDate}
-		//fmt.Println(s)
+		//s := bson.M{"patientId": v.PatientID, "siteId": v.SiteID, "procDate": v.ProcDate}
+		//_, err := col.Upsert(s, v)
+		//if err != nil {
+		//	fmt.Println("Error inserting doc", err)
+		//}
 
-		_, err := col.Upsert(s, v)
-		if err != nil {
+		if err := col.Insert(v); err != nil {
 			fmt.Println("Error inserting doc", err)
 		}
+		//fmt.Println(s)
 	}
 }
