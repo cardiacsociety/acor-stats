@@ -1,7 +1,8 @@
-db.Data.aggregate([
+// The aggregation query...
+db.data.aggregate([
     {
         $match: {
-            siteState: "NSW",
+            siteState: "SA",
             procType: "device"
         }
     },
@@ -11,8 +12,10 @@ db.Data.aggregate([
                 month: {$month: "$procDate"},
                 year: {$year: "$procDate"},
             },
-            count: {$sum: 1}
+            count: {$sum: 1},
+            date: {$first: "$procDate"}
         }
-    }
+    },
+    { $sort: { "date": 1 } }
 ])
 

@@ -4,10 +4,11 @@ package handlers
 
 import (
 	"io"
-	"net/http"
-
-	"encoding/json"
 	"fmt"
+
+	"net/http"
+	"encoding/json"
+
 	"github.com/cardiacsociety/acor-stats/db"
 	"gopkg.in/mgo.v2/bson"
 	"github.com/34South/envr"
@@ -69,14 +70,13 @@ func chartJSON(title string, xbm []bson.M) ([]byte, error) {
 
 	// Add title...
 	rj := Chart{Title: title}
-	//months := []string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Nov", "Dec"}
+	months := []string{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"}
 
 	// ... and array of labels and values, in order
 	for _, v := range xbm {
 		point := v["_id"].(bson.M)
-		//fmt.Println(i, point["month"], "-", point["year"])
-		//monthNumber := point["month"].(int)
-		rj.Labels = append(rj.Labels, fmt.Sprintf("%v-%v", point["month"], point["year"]))
+		mi := point["month"].(int) - 1
+		rj.Labels = append(rj.Labels, fmt.Sprintf("%v-%v", months[mi], point["year"]))
 		rj.Data = append(rj.Data, v["count"].(int))
 	}
 

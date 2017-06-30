@@ -34,8 +34,9 @@ func TimeReport(rf ReportFilter) []bson.M {
 
 	return []bson.M{
 		{"$match": match},
-		{"$group": bson.M{"_id": bson.M{"month": bson.M{"$month": "$procDate"}, "year": bson.M{"$year": "$procDate"}}, "count": bson.M{"$sum": 1}}},
-		{"$sort": bson.M{"_id.year": 1, "_id.month": 1}},
+		{"$group": bson.M{"_id": bson.M{"month": bson.M{"$month": "$procDate"}, "year": bson.M{"$year": "$procDate"}}, "count": bson.M{"$sum": 1}, "date": bson.M{"$first": "$procDate"}}},
+		//{"$sort": bson.M{"_id.year": 1, "_id.month": 1}},
+		{"$sort": bson.M{"date": 1}},
 	}
 
 }
